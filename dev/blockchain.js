@@ -21,7 +21,7 @@ Blockchain.prototype.createNewBlock = function(nonce, previousBlockHash, hash) {
 };
 
 Blockchain.prototype.getLastBlock = function(){
-    return test.chain(this.chain.length + 1);
+    return test.chain(this.chain.length -1);
 }
 Blockchain.prototype.createNewTransaction = function(amount, sender, recipents){
     //create new transaction objects 
@@ -37,7 +37,9 @@ Blockchain.prototype.createNewTransaction = function(amount, sender, recipents){
   
 }
 Blockchain.prototype.hashBlock = function (previousBlockHash,currentBlockData, nonce ){
-    
+    const dataAsAString = previousBlockHash + nonce+toString() +JSON.stringify(currentBlockData);
+    const hash =sha256(dataAsAString);
+    return hash;
 }
 
 
