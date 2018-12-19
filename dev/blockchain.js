@@ -1,7 +1,8 @@
 const sha256 = require ('sha256');
 function Blockchain(){
     this.chain = [];
-    this.pendingTransaction = [];
+	this.pendingTransaction = [];
+	this.createNewBlock(100, '0', '0');
 }
 
 Blockchain.prototype.createNewBlock = function(nonce, previousBlockHash, hash) {
@@ -41,7 +42,23 @@ Blockchain.prototype.hashBlock = function (previousBlockHash,currentBlockData, n
     const hash =sha256(dataAsAString);
     return hash;
 }
+//Proof of Work take in current block data from Previous Hash 
+//generate the correct hash , give a ton of calculation , going back to remind a 
+//hash block previous hash ,link by their data , o
+//recreate every single block  POW 
+// 
+Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData) {
+	let nonce = 0;
+	let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+	while (hash.substring(0, 4) !== '0000') {
+		nonce++;
+		hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+	}
+
+	return nonce;
+};
 
 
 
 module.exports = Blockchain;
+
